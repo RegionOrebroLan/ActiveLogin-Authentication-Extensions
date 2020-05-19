@@ -1,0 +1,5 @@
+<Project>
+	<PropertyGroup>
+		<AssemblyName>RegionOrebroLan.ActiveLogin.Authentication.UnitTests</AssemblyName>
+	</PropertyGroup>
+</Project>

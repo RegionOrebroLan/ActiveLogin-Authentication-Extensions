@@ -6,8 +6,8 @@ namespace RegionOrebroLan.ActiveLogin.Authentication.Configuration
 	{
 		#region Properties
 
-		public virtual DynamicOptions ClientCertificateResolver { get; set; }
-		public virtual DynamicOptions RootCertificateResolver { get; set; }
+		public virtual DynamicOptions ClientCertificate { get; set; }
+		public virtual DynamicOptions RootCertificate { get; set; }
 
 		#endregion
 	}

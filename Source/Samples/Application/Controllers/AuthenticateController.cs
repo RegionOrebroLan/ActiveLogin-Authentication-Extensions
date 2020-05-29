@@ -27,11 +27,11 @@ namespace Application.Controllers
 
 		#region Constructors
 
-		public AuthenticateController(IAuthenticationDecoratorLoader authenticationDecoratorLoader, IOptions<ExtendedAuthenticationOptions> authenticationOptions, IAuthenticationSchemeLoader authenticationSchemeLoader, ILoggerFactory loggerFactory)
+		public AuthenticateController(IOptions<ExtendedAuthenticationOptions> authenticationOptions, IAuthenticationSchemeLoader authenticationSchemeLoader, IDecorationLoader decorationLoader, ILoggerFactory loggerFactory)
 		{
-			this.AuthenticationDecoratorLoader = authenticationDecoratorLoader ?? throw new ArgumentNullException(nameof(authenticationDecoratorLoader));
 			this.AuthenticationOptions = authenticationOptions ?? throw new ArgumentNullException(nameof(authenticationOptions));
 			this.AuthenticationSchemeLoader = authenticationSchemeLoader ?? throw new ArgumentNullException(nameof(authenticationSchemeLoader));
+			this.DecorationLoader = decorationLoader ?? throw new ArgumentNullException(nameof(decorationLoader));
 
 			if(loggerFactory == null)
 				throw new ArgumentNullException(nameof(loggerFactory));
@@ -43,9 +43,9 @@ namespace Application.Controllers
 
 		#region Properties
 
-		protected internal virtual IAuthenticationDecoratorLoader AuthenticationDecoratorLoader { get; }
 		protected internal virtual IOptions<ExtendedAuthenticationOptions> AuthenticationOptions { get; }
 		protected internal virtual IAuthenticationSchemeLoader AuthenticationSchemeLoader { get; }
+		protected internal virtual IDecorationLoader DecorationLoader { get; }
 		protected internal virtual ILogger Logger { get; }
 		protected internal virtual IDictionary<string, Tuple<string, string>> UniqueIdentifierMap => _uniqueIdentifierMap;
 
@@ -63,10 +63,10 @@ namespace Application.Controllers
 			var returnUrl = this.ResolveAndValidateReturnUrl(authenticateResult.Properties.Items["returnUrl"]);
 
 			var authenticationScheme = authenticateResult.Properties.Items["scheme"];
-			var decorators = (await this.AuthenticationDecoratorLoader.GetPostDecoratorsAsync(authenticationScheme)).ToArray();
+			var decorators = (await this.DecorationLoader.GetCallbackDecoratorsAsync(authenticationScheme)).ToArray();
 
 			if(!decorators.Any())
-				throw new InvalidOperationException($"There are no post-authentication-decorators for authentication-scheme \"{authenticationScheme}\".");
+				throw new InvalidOperationException($"There are no callback-decorators for authentication-scheme \"{authenticationScheme}\".");
 
 			var authenticationProperties = new AuthenticationProperties();
 			var claims = new ClaimBuilderCollection();
@@ -76,13 +76,7 @@ namespace Application.Controllers
 				await decorator.DecorateAsync(authenticateResult, authenticationScheme, claims, authenticationProperties);
 			}
 
-			var uniqueIdentifierClaim = claims.FindFirstUniqueIdentifierClaim();
-
-			if(uniqueIdentifierClaim == null)
-				throw new InvalidOperationException($"There is no unique-identifier-claim for authentication-scheme \"{authenticationScheme}\".");
-
-			uniqueIdentifierClaim.Value = this.GetOrCreateUniqueIdentifier(authenticationScheme, uniqueIdentifierClaim.Value);
-			uniqueIdentifierClaim.Issuer = uniqueIdentifierClaim.OriginalIssuer = uniqueIdentifierClaim.ValueType = null;
+			await this.ResolveUniqueIdentifier(authenticationScheme, claims);
 
 			await this.HttpContext.SignInAsync(this.AuthenticationOptions.Value.DefaultScheme, this.CreateClaimsPrincipal(authenticationScheme, claims), authenticationProperties);
 
@@ -104,7 +98,7 @@ namespace Application.Controllers
 
 			var authenticationProperties = this.CreateAuthenticationProperties(returnUrl, authenticationScheme);
 			var certificatePrincipal = authenticateResult.Principal;
-			var decorators = (await this.AuthenticationDecoratorLoader.GetDecoratorsAsync(authenticationScheme)).ToArray();
+			var decorators = (await this.DecorationLoader.GetAuthenticationDecoratorsAsync(authenticationScheme)).ToArray();
 
 			if(decorators.Any())
 			{
@@ -139,6 +133,11 @@ namespace Application.Controllers
 
 			authenticationProperties.SetString(nameof(returnUrl), returnUrl);
 			authenticationProperties.SetString(nameof(scheme), scheme);
+
+			foreach(var decorator in this.DecorationLoader.GetAuthenticationPropertiesDecoratorsAsync(scheme).Result)
+			{
+				decorator.DecorateAsync(scheme, authenticationProperties, returnUrl);
+			}
 
 			return authenticationProperties;
 		}
@@ -186,6 +185,24 @@ namespace Application.Controllers
 			return returnUrl;
 		}
 
+		protected internal virtual async Task ResolveUniqueIdentifier(string authenticationScheme, IClaimBuilderCollection claims)
+		{
+			if(claims == null)
+				throw new ArgumentNullException(nameof(claims));
+
+			var uniqueIdentifierClaim = claims.FindFirstUniqueIdentifierClaim();
+
+			if(uniqueIdentifierClaim == null)
+				throw new InvalidOperationException($"There is no unique-identifier-claim for authentication-scheme \"{authenticationScheme}\".");
+
+			var identityProvider = claims.FindFirstIdentityProviderClaim()?.Value ?? authenticationScheme;
+
+			uniqueIdentifierClaim.Value = this.GetOrCreateUniqueIdentifier(identityProvider, uniqueIdentifierClaim.Value);
+			uniqueIdentifierClaim.Issuer = uniqueIdentifierClaim.OriginalIssuer = uniqueIdentifierClaim.ValueType = null;
+
+			await Task.CompletedTask.ConfigureAwait(false);
+		}
+
 		public virtual async Task<IActionResult> Undefined(string authenticationScheme, string returnUrl)
 		{
 			this.Logger.LogErrorIfEnabled("Undefined action called.");
@@ -225,7 +242,7 @@ namespace Application.Controllers
 			// ReSharper disable InvertIf
 			if(authenticateResult?.Principal is WindowsPrincipal)
 			{
-				var decorators = (await this.AuthenticationDecoratorLoader.GetDecoratorsAsync(authenticationScheme)).ToArray();
+				var decorators = (await this.DecorationLoader.GetAuthenticationDecoratorsAsync(authenticationScheme)).ToArray();
 
 				if(!decorators.Any())
 					throw new InvalidOperationException($"There are no authentication-decorators for authentication-scheme \"{authenticationScheme}\".");

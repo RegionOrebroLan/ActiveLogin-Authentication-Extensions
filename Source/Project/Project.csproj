@@ -4,7 +4,7 @@
 		<PackageReference Include="ActiveLogin.Authentication.BankId.AspNetCore" Version="3.0.0" />
 		<PackageReference Include="ActiveLogin.Authentication.BankId.AspNetCore.QRCoder" Version="3.0.0" />
 		<PackageReference Include="ActiveLogin.Authentication.GrandId.AspNetCore" Version="3.0.0" />
-		<PackageReference Include="RegionOrebroLan.Web.Authentication" Version="0.1.0-alpha" />
+		<PackageReference Include="RegionOrebroLan.Web.Authentication" Version="0.2.1-alpha" />
 	</ItemGroup>
 	<Import Project="Build\Build.targets" />
 </Project>

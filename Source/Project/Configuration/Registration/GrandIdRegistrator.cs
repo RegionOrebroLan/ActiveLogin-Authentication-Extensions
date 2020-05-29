@@ -11,10 +11,12 @@ namespace RegionOrebroLan.ActiveLogin.Authentication.Configuration.Registration
 
 		public override void Add(ExtendedAuthenticationBuilder authenticationBuilder, string name, SchemeRegistrationOptions schemeRegistrationOptions)
 		{
-			var grandIdConfiguration = this.GetConfigurationOptions(authenticationBuilder, schemeRegistrationOptions);
+			base.Add(authenticationBuilder, name, schemeRegistrationOptions);
 
 			authenticationBuilder.AddGrandId(builder =>
 			{
+				var grandIdConfiguration = this.GetConfigurationOptions(authenticationBuilder, schemeRegistrationOptions);
+
 				// ReSharper disable ConvertIfStatementToSwitchStatement
 				if(grandIdConfiguration.Environment == ActiveLoginEnvironment.Simulated)
 				{

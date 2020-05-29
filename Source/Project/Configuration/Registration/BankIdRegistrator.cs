@@ -24,13 +24,12 @@ namespace RegionOrebroLan.ActiveLogin.Authentication.Configuration.Registration
 
 		public override void Add(ExtendedAuthenticationBuilder authenticationBuilder, string name, SchemeRegistrationOptions schemeRegistrationOptions)
 		{
-			if(authenticationBuilder == null)
-				throw new ArgumentNullException(nameof(authenticationBuilder));
-
-			var bankIdConfiguration = this.GetConfigurationOptions(authenticationBuilder, schemeRegistrationOptions);
+			base.Add(authenticationBuilder, name, schemeRegistrationOptions);
 
 			authenticationBuilder.AddBankId(builder =>
 			{
+				var bankIdConfiguration = this.GetConfigurationOptions(authenticationBuilder, schemeRegistrationOptions);
+
 				//builder.Configure(options => { this.Bind(configuration, options, schemeRegistrationOptions); });
 
 				if(bankIdConfiguration.Environment == ActiveLoginEnvironment.Simulated)
@@ -84,71 +83,5 @@ namespace RegionOrebroLan.ActiveLogin.Authentication.Configuration.Registration
 		}
 
 		#endregion
-
-		//#region Fields
-
-		////private ICertificateResolver _certificateResolver;
-		//private X509Certificate2 _clientCertificate;
-		//private ResolverOptions _clientCertificateResolverOptions;
-		//private X509Certificate2 _rootCertificate;
-		//private ResolverOptions _rootCertificateResolverOptions;
-
-		//#endregion
-
-		//protected internal virtual BankIdConfigurationOptions BankIdConfiguration { get; set; }
-
-		//protected internal virtual ICertificateResolver CertificateResolver
-		//{
-		//	get
-		//	{
-		//		// ReSharper disable InvertIf
-		//		if(this._certificateResolver == null)
-		//		{
-		//			var services = new ServiceCollection();
-
-		//			services.AddSingleton(AppDomain.CurrentDomain);
-		//			services.AddSingleton<FileCertificateResolver>();
-		//			services.AddSingleton<IApplicationDomain, AppDomainWrapper>();
-		//			services.AddSingleton<ICertificateResolver, CertificateResolver>();
-		//			services.AddSingleton<StoreCertificateResolver>();
-
-		//			this._certificateResolver = services.BuildServiceProvider().GetRequiredService<ICertificateResolver>();
-		//		}
-		//		// ReSharper restore InvertIf
-
-		//		return this._certificateResolver;
-		//	}
-		//}
-
-		//protected internal virtual X509Certificate2 ClientCertificate => this._clientCertificate ??= this.ClientCertificateResolverOptions.Resolve(this.CertificateResolver).Unwrap<X509Certificate2>();
-
-		//protected internal virtual Func<X509Certificate2> ClientCertificateFunction => () =>
-		//{
-		//	try
-		//	{
-		//		return this.ClientCertificate;
-		//	}
-		//	catch(Exception exception)
-		//	{
-		//		throw new InvalidOperationException(this.GetCertificateNotSetupExceptionMessage("client"), exception);
-		//	}
-		//};
-
-		//protected internal virtual ResolverOptions ClientCertificateResolverOptions => this._clientCertificateResolverOptions ??= this.CreateResolverOptions(this.BankIdConfiguration.ClientCertificateResolver);
-		//protected internal virtual X509Certificate2 RootCertificate => this._rootCertificate ??= this.RootCertificateResolverOptions.Resolve(this.CertificateResolver).Unwrap<X509Certificate2>();
-
-		////protected internal virtual Func<X509Certificate2> RootCertificateFunction => () =>
-		////{
-		////	try
-		////	{
-		////		return this.RootCertificate;
-		////	}
-		////	catch(Exception exception)
-		////	{
-		////		throw new InvalidOperationException(this.GetCertificateNotSetupExceptionMessage("root"), exception);
-		////	}
-		////};
-
-		//protected internal virtual ResolverOptions RootCertificateResolverOptions => this._rootCertificateResolverOptions ??= this.CreateResolverOptions(this.BankIdConfiguration.RootCertificateResolver);
 	}
 }

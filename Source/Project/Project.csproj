@@ -10,7 +10,7 @@
 		<AssemblyVersion>$(VersionPrefix).0</AssemblyVersion>
 		<Description>Additions and extensions for ActiveLogin.Authentication.</Description>
 		<FileVersion>$(VersionPrefix).0</FileVersion>
-		<TargetFramework>netcoreapp3.1</TargetFramework>
+		<TargetFrameworks>net5.0;netcoreapp3.1</TargetFrameworks>
 		<Version>$(VersionPrefix)</Version>
 		<Version Condition="$(VersionPrereleaseName) != ''">$(Version)-$(VersionPrereleaseName)</Version>
 	</PropertyGroup>

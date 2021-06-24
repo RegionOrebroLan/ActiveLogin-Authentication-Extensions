@@ -12,7 +12,4 @@
 	<ItemGroup>
 		<ProjectReference Include="..\..\Project\Project.csproj" />
 	</ItemGroup>
-	<ItemGroup>
-	  <Folder Include="Data\" />
-	</ItemGroup>
 </Project>

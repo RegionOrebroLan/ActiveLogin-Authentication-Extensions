@@ -15,19 +15,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Build", "Build", "{43D62E8E
 	ProjectSection(SolutionItems) = preProject
 		Directory.Build.props = Directory.Build.props
 		Directory.Build.targets = Directory.Build.targets
+		Directory.Version.props = Directory.Version.props
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Certificates", "Certificates", "{3EF0B9A2-3E90-4062-A5EE-DC3C5FB5E753}"
 	ProjectSection(SolutionItems) = preProject
 		.Global\Certificates\BankId-Test-Root-CA.crt = .Global\Certificates\BankId-Test-Root-CA.crt
 		.Global\Certificates\ReadMe.md = .Global\Certificates\ReadMe.md
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CodeAnalysis", "CodeAnalysis", "{E2B140BE-56E4-4D82-A011-E1D64F936198}"
-	ProjectSection(SolutionItems) = preProject
-		.Global\CodeAnalysis\All-Rules-As-Error.ruleset = .Global\CodeAnalysis\All-Rules-As-Error.ruleset
-		.Global\CodeAnalysis\Solution-dictionary.xml = .Global\CodeAnalysis\Solution-dictionary.xml
-		.Global\CodeAnalysis\Solution-suppressions.cs = .Global\CodeAnalysis\Solution-suppressions.cs
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documents", "Documents", "{E3F474E2-0E85-47CD-A2DB-55852CEDB670}"
@@ -40,7 +34,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Settings", "Settings", "{E6
 		..\.editorconfig = ..\.editorconfig
 		..\.gitignore = ..\.gitignore
 		..\License = ..\License
-		NuGet.config = NuGet.config
+		..\NuGet.config = ..\NuGet.config
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Signing", "Signing", "{169D8A5D-6205-40F4-86B6-054AF7BEE7B3}"
@@ -99,7 +93,6 @@ Global
 		{3845E1B5-14EC-4370-8DD5-5F80E0F51EBF} = {11402557-CA24-4A83-BE7F-E88F242BAA07}
 		{43D62E8E-B7D9-4020-A5CA-3D94D999CD5A} = {11402557-CA24-4A83-BE7F-E88F242BAA07}
 		{3EF0B9A2-3E90-4062-A5EE-DC3C5FB5E753} = {11402557-CA24-4A83-BE7F-E88F242BAA07}
-		{E2B140BE-56E4-4D82-A011-E1D64F936198} = {11402557-CA24-4A83-BE7F-E88F242BAA07}
 		{E3F474E2-0E85-47CD-A2DB-55852CEDB670} = {11402557-CA24-4A83-BE7F-E88F242BAA07}
 		{E69917BB-D44E-418E-AE1E-8C62EE842E58} = {11402557-CA24-4A83-BE7F-E88F242BAA07}
 		{169D8A5D-6205-40F4-86B6-054AF7BEE7B3} = {11402557-CA24-4A83-BE7F-E88F242BAA07}

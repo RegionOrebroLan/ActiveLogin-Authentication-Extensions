@@ -26,7 +26,7 @@
 		<PackageReference Include="ActiveLogin.Authentication.BankId.AspNetCore" Version="4.0.0" />
 		<PackageReference Include="ActiveLogin.Authentication.BankId.AspNetCore.QRCoder" Version="4.0.0" />
 		<PackageReference Include="ActiveLogin.Authentication.GrandId.AspNetCore" Version="4.0.0" />
-		<PackageReference Include="RegionOrebroLan.Web.Authentication" Version="0.3.0-alpha" />
+		<PackageReference Include="RegionOrebroLan.Web.Authentication" Version="0.4.1-alpha" />
 	</ItemGroup>
 	<Target Name="HandleAssemblyOriginatorKeyFile" BeforeTargets="BeforeBuild" Condition="$(SignAssembly) AND !Exists('$(AssemblyOriginatorKeyFile)')">
 		<PropertyGroup>

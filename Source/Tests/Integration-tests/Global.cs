@@ -32,7 +32,7 @@ namespace RegionOrebroLan.ActiveLogin.Authentication.IntegrationTests
 					var configurationBuilder = CreateConfigurationBuilder();
 
 					_configuration = configurationBuilder
-						.AddJsonFile("AppSettings.json", true, true)
+						.AddJsonFile("appsettings.json", true, true)
 						.Build();
 				}
 

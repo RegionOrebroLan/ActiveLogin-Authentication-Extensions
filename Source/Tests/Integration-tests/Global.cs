@@ -7,7 +7,7 @@ using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Hosting.Internal;
 
-namespace RegionOrebroLan.ActiveLogin.Authentication.IntegrationTests
+namespace IntegrationTests
 {
 	// ReSharper disable All
 	[SuppressMessage("Naming", "CA1716:Identifiers should not match keywords")]

@@ -4,9 +4,6 @@
 		<TypeScriptCompileBlocked>true</TypeScriptCompileBlocked>
 	</PropertyGroup>
 	<ItemGroup>
-		<PackageReference Include="IdentityModel" Version="5.1.0" />
-	</ItemGroup>
-	<ItemGroup>
 		<ProjectReference Include="..\..\Project\Project.csproj" />
 	</ItemGroup>
 </Project>

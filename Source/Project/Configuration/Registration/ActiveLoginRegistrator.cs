@@ -4,7 +4,7 @@ using Microsoft.Extensions.DependencyInjection.Extensions;
 using RegionOrebroLan.ActiveLogin.Authentication.Decoration;
 using RegionOrebroLan.Web.Authentication;
 using RegionOrebroLan.Web.Authentication.Configuration;
-using RegionOrebroLan.Web.Authentication.Configuration.Registration;
+using RegionOrebroLan.Web.Authentication.DependencyInjection.Registration;
 using RegionOrebroLan.Web.Authentication.Decoration.Configuration;
 
 namespace RegionOrebroLan.ActiveLogin.Authentication.Configuration.Registration

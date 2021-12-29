@@ -1,13 +1,14 @@
 using System;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
+using RegionOrebroLan.ActiveLogin.Authentication.Configuration;
 using RegionOrebroLan.ActiveLogin.Authentication.Decoration;
 using RegionOrebroLan.Web.Authentication;
 using RegionOrebroLan.Web.Authentication.Configuration;
-using RegionOrebroLan.Web.Authentication.DependencyInjection.Registration;
 using RegionOrebroLan.Web.Authentication.Decoration.Configuration;
+using RegionOrebroLan.Web.Authentication.DependencyInjection.Registration;
 
-namespace RegionOrebroLan.ActiveLogin.Authentication.Configuration.Registration
+namespace RegionOrebroLan.ActiveLogin.Authentication.DependencyInjection.Registration
 {
 	public abstract class ActiveLoginRegistrator : Registrator
 	{
@@ -52,7 +53,7 @@ namespace RegionOrebroLan.ActiveLogin.Authentication.Configuration.Registration
 				{
 					AuthenticationSchemes =
 					{
-						{"*", 1000}
+						{ "*", 1000 }
 					},
 					Type = typeof(ActiveLoginAuthenticationPropertiesDecorator).AssemblyQualifiedName
 				});
@@ -61,7 +62,7 @@ namespace RegionOrebroLan.ActiveLogin.Authentication.Configuration.Registration
 				{
 					AuthenticationSchemes =
 					{
-						{"*", 1000}
+						{ "*", 1000 }
 					},
 					Type = typeof(ActiveLoginCallbackDecorator).AssemblyQualifiedName
 				});

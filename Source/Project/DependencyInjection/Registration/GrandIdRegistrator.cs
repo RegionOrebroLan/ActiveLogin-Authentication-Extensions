@@ -1,9 +1,10 @@
 using ActiveLogin.Authentication.GrandId.AspNetCore;
 using Microsoft.Extensions.DependencyInjection;
+using RegionOrebroLan.ActiveLogin.Authentication.Configuration;
 using RegionOrebroLan.Web.Authentication;
 using RegionOrebroLan.Web.Authentication.Configuration;
 
-namespace RegionOrebroLan.ActiveLogin.Authentication.Configuration.Registration
+namespace RegionOrebroLan.ActiveLogin.Authentication.DependencyInjection.Registration
 {
 	public abstract class GrandIdRegistrator : ActiveLoginRegistrator<ActiveLoginConfigurationOptions>
 	{

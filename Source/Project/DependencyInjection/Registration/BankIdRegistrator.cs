@@ -4,12 +4,13 @@ using ActiveLogin.Authentication.BankId.AspNetCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using RegionOrebroLan.Abstractions.Extensions;
+using RegionOrebroLan.ActiveLogin.Authentication.Configuration;
 using RegionOrebroLan.Configuration;
 using RegionOrebroLan.Security.Cryptography.Configuration;
 using RegionOrebroLan.Web.Authentication;
 using RegionOrebroLan.Web.Authentication.Configuration;
 
-namespace RegionOrebroLan.ActiveLogin.Authentication.Configuration.Registration
+namespace RegionOrebroLan.ActiveLogin.Authentication.DependencyInjection.Registration
 {
 	public abstract class BankIdRegistrator : ActiveLoginRegistrator<BankIdConfigurationOptions>
 	{
@@ -68,7 +69,7 @@ namespace RegionOrebroLan.ActiveLogin.Authentication.Configuration.Registration
 				if(dynamicOptions == null)
 					throw new ArgumentNullException(nameof(dynamicOptions));
 
-				var resolverOptions = (ResolverOptions) authenticationBuilder.InstanceFactory.Create(dynamicOptions.Type);
+				var resolverOptions = (ResolverOptions)authenticationBuilder.InstanceFactory.Create(dynamicOptions.Type);
 
 				dynamicOptions.Options?.Bind(resolverOptions);
 

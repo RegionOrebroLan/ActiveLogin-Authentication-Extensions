@@ -12,11 +12,9 @@
 	const rollupNodeResolver = require("@rollup/plugin-node-resolve");
 	const rollupTerser = require("rollup-plugin-terser");
 	const rollupTypescript = require("@rollup/plugin-typescript");
-	const sass = require("gulp-sass");
+	const sass = require("gulp-sass")(require("node-sass"));
 	const svgSrite = require("gulp-svg-sprite");
 	const sourcemaps = require("gulp-sourcemaps");
-
-	sass.compiler = require("node-sass");
 
 	const destinationRootDirectoryName = "wwwroot";
 	const iconsDirectoryName = "Icons";
